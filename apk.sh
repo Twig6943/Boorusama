@@ -24,7 +24,7 @@ case $FLAVOR in
     ;;
   prod)
     dart pub global activate flutterfire_cli
-    flutterfire configure
+    flutterfire configure --project khoadng.boorusama
     flutter pub upgrade
     flutter build apk --release --flavor prod --dart-define-from-file env/prod.json
     ;;
