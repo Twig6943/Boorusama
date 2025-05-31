@@ -17,9 +17,11 @@ echo "Building $appname version $version for $FLAVOR"
 # Run the Flutter command based on the flavor
 case $FLAVOR in
   dev)
+    flutter pub upgrade
     flutter build apk --release --flavor dev --dart-define-from-file env/dev.json
     ;;
   prod)
+    flutter pub upgrade
     flutter build apk --release --flavor prod --dart-define-from-file env/prod.json
     ;;
   *)
