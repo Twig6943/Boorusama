@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    if: github.ref == 'refs/heads/4.0.0'
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
     steps:
