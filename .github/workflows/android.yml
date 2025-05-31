@@ -24,7 +24,10 @@ jobs:
       - name: Install Firebase_CLI
         run: |
           curl -sL https://firebase.tools | bash
-          
+
+      - name: Generate Firebase options
+        run: flutterfire configure --out=lib/core/firebase --project=boorusama
+
       - name: Install dependencies
         run: flutter pub get
 
