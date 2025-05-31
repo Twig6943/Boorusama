@@ -1,0 +1,45 @@
+name: Release Flutter Android
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/4.0.0'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Make scripts executable
+        run: chmod +x release.sh appbundle.sh
+
+      - name: Run release.sh
+        run: ./release.sh
+
+      - name: Get version and app name
+        id: meta
+        run: |
+          version=$(head -n 5 pubspec.yaml | tail -n 1 | cut -d ' ' -f 2 | cut -d + -f 1)
+          appname=$(head -n 1 pubspec.yaml | cut -d ' ' -f 2)
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "appname=$appname" >> $GITHUB_OUTPUT
+
+      - name: Upload AAB
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/bundle/prodRelease/${{ steps.meta.outputs.appname }}-${{ steps.meta.outputs.version }}.aab
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
