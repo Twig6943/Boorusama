@@ -25,9 +25,6 @@ jobs:
         run: |
           curl -sL https://firebase.tools | bash
 
-      - name: Generate Firebase options
-        run: flutter configure --out=lib/core/firebase --project=boorusama
-
       - name: Install dependencies
         run: flutter pub get
 
