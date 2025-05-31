@@ -18,6 +18,7 @@ echo "Building $appname version $version for $FLAVOR"
 case $FLAVOR in
   dev)
     dart pub global activate flutterfire_cli
+    flutterfire configure
     flutter pub upgrade
     flutter build apk --release --flavor dev --dart-define-from-file env/dev.json
     ;;
